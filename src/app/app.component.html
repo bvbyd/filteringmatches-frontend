@@ -1,20 +1,78 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav class="sidenav" mode="over" opened="true">
 
+    <section>
+      <mat-checkbox (change)="params.hasPhoto=$event.checked">Has photo</mat-checkbox>
+      <mat-checkbox (change)="params.inContact=$event.checked">In contact</mat-checkbox>
+      <mat-checkbox (change)="params.favourite=$event.checked">favorite</mat-checkbox>
+    </section>
+    <section>
+      Age From
+      <mat-slider (change)="params.ageFrom=$event.value" thumbLabel min="18" max="95" step="1" value="18"></mat-slider>
+      <br> Age To
+      <mat-slider (change)="params.ageTo=$event.value" thumbLabel min="18" max="95" step="1" value="95"></mat-slider>
+    </section>
+    <section></section>
+    <section>
+      Compatibility Score From
+      <mat-slider (change)="params.compatibilityFrom=$event.value" thumbLabel min="1" max="99" step="1" value="1"></mat-slider>
+      <br> Compatibility Score To
+      <mat-slider (change)="params.compatibilityTo=$event.value" thumbLabel min="1" max="99" step="1" value="99"></mat-slider>
+    </section>
+
+
+    <section></section>
+    <section>
+      Height From
+      <mat-slider (change)="params.heightFrom=$event.value" thumbLabel min="135" max="210" step="1" value="135"></mat-slider>
+      <br> Height To
+      <mat-slider (change)="params.heightTo=$event.value" thumbLabel min="135" max="210" step="1" value="210"></mat-slider>
+    </section>
+    <section></section>
+    <section>
+      Distance
+      <mat-slider (change)="params.distance=$event.value" thumbLabel min="30" max="300" step="1" value="200"></mat-slider>
+    </section>
+
+    <section>
+      <div class="button-row">
+        <button mat-fab color="primary" (click)="makeRequest()">
+          <mat-icon>done</mat-icon>
+        </button>
+      </div>
+    </section>
+  </mat-sidenav>
+  <button mat-fab class="filter-fab" color="primary" (click)="sidenav.toggle()">
+    <mat-icon>filter_list</mat-icon>
+  </button>
+  <div class="sidenav-content">
+
+    <mat-grid-list cols="3" rowHeight="1:1">
+      <mat-grid-tile *ngFor="let person of persons">
+        <mat-card class="card">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon style="color: red">{{ person.favourite ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </div>
+
+            <mat-card-title>{{person.displayName}}</mat-card-title>
+            <mat-card-subtitle>{{person.city.name}}</mat-card-subtitle>
+          </mat-card-header>
+
+          <img mat-card-image [src]="person.mainPhoto ? person.mainPhoto : 'https://image.flaticon.com/icons/png/512/118/118781.png'">
+          <mat-card-content>
+
+            <p>Age: <b>{{person.age}}</b></p>
+            <p>Job: <b>{{person.jobTitle}}</b></p>
+            <p>Height: <b>{{person.heightInCm}} cm</b></p>
+            <p>Religion: <b>{{person.religion}}</b></p>
+
+          </mat-card-content>
+        </mat-card>
+
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </div>
+</mat-sidenav-container>
